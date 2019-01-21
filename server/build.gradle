@@ -1,0 +1,15 @@
+apply plugin: 'org.springframework.boot'
+
+bootJar {
+    version = "${PROJECT_VERSION}"
+}
+
+dependencies {
+    implementation project(":api")
+    implementation project(":core")
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "tech.iooo.boot:iooo-spring-boot-vertx-starter"
+    implementation 'net.devh:grpc-server-spring-boot-starter:2.2.1.RELEASE'
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+}

@@ -1,0 +1,59 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${SPRING_BOOT_VERSION}")
+        classpath "com.google.protobuf:protobuf-gradle-plugin:0.8.8"
+        classpath 'com.google.gradle:osdetector-gradle-plugin:1.4.0'
+    }
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            mavenLocal()
+            mavenCentral()
+            jcenter()
+        }
+    }
+    apply plugin: "java"
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    group "${PROJECT_GROUP}"
+    version "${PROJECT_VERSION}"
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+
+    dependencies {
+        implementation platform("tech.iooo.boot:iooo-boot-dependencies:${IOOO_BOOT_VERSION}")
+        implementation platform("io.vertx:vertx-dependencies:${VERTX_VERSION}")
+        implementation platform("org.springframework.boot:spring-boot-dependencies:${SPRING_BOOT_VERSION}")
+
+        implementation "tech.iooo.boot:iooo-boot-core"
+        implementation "tech.iooo.boot:iooo-boot-commonly-used"
+        testImplementation "tech.iooo.boot:iooo-boot-test-bundle"
+    }
+
+}
+
+apply plugin: "java"
+
+group "${PROJECT_GROUP}"
+version "${PROJECT_VERSION}"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+

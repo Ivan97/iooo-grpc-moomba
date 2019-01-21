@@ -1,0 +1,6 @@
+rootProject.name = 'iooo-grpc-moomba'
+
+include 'core'
+include 'api'
+include 'server'
+include 'client'
