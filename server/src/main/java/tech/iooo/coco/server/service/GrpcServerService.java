@@ -16,7 +16,7 @@ public class GrpcServerService extends SimpleImplBase {
 
   @Override
   public void sayHello(HelloRequest request, StreamObserver<HelloReply> responseObserver) {
-    HelloReply reply = HelloReply.newBuilder().setMessage("Hello ==> " + request.getName()).build();
+    HelloReply reply = HelloReply.newBuilder().setMessage("[RESPONSE] : Hello ==> " + request.getName() + "!\n").build();
     responseObserver.onNext(reply);
     responseObserver.onCompleted();
   }

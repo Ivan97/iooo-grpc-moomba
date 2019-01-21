@@ -4,6 +4,13 @@ bootJar {
     version = "${PROJECT_VERSION}"
 }
 
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
 dependencies {
     implementation project(":api")
     implementation project(":core")
@@ -11,6 +18,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "tech.iooo.boot:iooo-spring-boot-vertx-starter"
     implementation 'net.devh:grpc-client-spring-boot-starter:2.2.1.RELEASE'
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
 }
