@@ -40,3 +40,12 @@ dependencies {
     testImplementation "tech.iooo.boot:iooo-boot-test-bundle:${IOOO_BOOT_VERSION}"
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
 }
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
+    }
+}
