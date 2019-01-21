@@ -47,6 +47,11 @@ subprojects {
         }
     }
 
+    clean {
+        delete "$projectDir/out"
+    }
+
+
     dependencies {
         implementation platform("tech.iooo.boot:iooo-boot-dependencies:${IOOO_BOOT_VERSION}")
         implementation platform("io.vertx:vertx-dependencies:${VERTX_VERSION}")
