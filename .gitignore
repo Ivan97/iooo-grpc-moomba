@@ -110,3 +110,6 @@ logs
 
 # Vert.x
 .vertx
+
+# grpc
+**/generated

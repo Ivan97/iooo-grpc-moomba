@@ -1,9 +1,15 @@
+import org.gradle.plugins.ide.eclipse.model.SourceFolder
+
 apply plugin: 'com.google.protobuf'
 apply plugin: "com.google.osdetector"
 
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    generatedFilesBaseDir = "$projectDir/src/generated"
+    clean {
+        delete generatedFilesBaseDir
     }
     plugins {
         grpc {
@@ -14,6 +20,28 @@ protobuf {
         all()*.plugins {
             grpc {}
         }
+    }
+}
+
+eclipse {
+    classpath {
+        file.beforeMerged { cp ->
+            def generatedGrpcFolder = new SourceFolder('src/generated/main/grpc', null)
+            generatedGrpcFolder.entryAttributes['ignore_optional_problems'] = 'true'
+            cp.entries.add(generatedGrpcFolder)
+            def generatedJavaFolder = new SourceFolder('src/generated/main/java', null)
+            generatedJavaFolder.entryAttributes['ignore_optional_problems'] = 'true'
+            cp.entries.add(generatedJavaFolder)
+        }
+    }
+}
+
+idea {
+    module {
+        sourceDirs += file("src/generated/main/java")
+        sourceDirs += file("src/generated/main/grpc")
+        generatedSourceDirs += file("src/generated/main/java")
+        generatedSourceDirs += file("src/generated/main/grpc")
     }
 }
 
@@ -37,6 +65,11 @@ dependencies {
     implementation "io.grpc:grpc-all:${grpcVersion}"
     implementation 'io.netty:netty-tcnative:2.0.20.Final:' + tcnative_classifier
     implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
+    if (JavaVersion.current().isJava9Compatible()) {
+        // Workaround for @javax.annotation.Generated
+        // see: https://github.com/grpc/grpc-java/issues/3633
+        implementation 'javax.annotation:javax.annotation-api:1.3.2'
+    }
     testImplementation "tech.iooo.boot:iooo-boot-test-bundle:${IOOO_BOOT_VERSION}"
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
 }
