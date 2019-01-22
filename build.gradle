@@ -23,7 +23,6 @@ plugins {
 subprojects {
     buildscript {
         repositories {
-            mavenLocal()
             mavenCentral()
             jcenter()
         }
