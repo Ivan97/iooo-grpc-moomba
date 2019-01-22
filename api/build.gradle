@@ -1,7 +1,7 @@
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
 apply plugin: 'com.google.protobuf'
-apply plugin: "com.google.osdetector"
+apply plugin: 'com.google.osdetector'
 
 protobuf {
     protoc {
@@ -20,6 +20,16 @@ protobuf {
         all()*.plugins {
             grpc {}
         }
+    }
+}
+
+def getLinuxReleaseSuffix() {
+    if (osdetector.release.isLike('debian')) {
+        return 'debian'
+    } else if (osdetector.release.isLike('redhat')) {
+        return 'redhat'
+    } else {
+        return ''
     }
 }
 
@@ -54,16 +64,10 @@ sourceSets {
     }
 }
 
-def tcnative_classifier = osdetector.classifier;
-// Fedora variants use a different soname for OpenSSL than other linux distributions
-// (see http://netty.io/wiki/forked-tomcat-native.html).
-if (osdetector.os == "linux" && osdetector.release.isLike("fedora")) {
-    tcnative_classifier += "-fedora"
-}
 
 dependencies {
     implementation "io.grpc:grpc-all:${grpcVersion}"
-    implementation 'io.netty:netty-tcnative:2.0.20.Final:' + tcnative_classifier
+    implementation 'io.netty:netty-tcnative:2.0.20.Final:' + osdetector.classifier
     implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
     if (JavaVersion.current().isJava9Compatible()) {
         // Workaround for @javax.annotation.Generated
