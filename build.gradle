@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         mavenCentral()
         jcenter()
         maven {
@@ -22,6 +23,7 @@ plugins {
 subprojects {
     buildscript {
         repositories {
+            mavenLocal()
             mavenCentral()
             jcenter()
         }
@@ -37,7 +39,6 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
-        mavenLocal()
         mavenCentral()
         jcenter()
         maven {
